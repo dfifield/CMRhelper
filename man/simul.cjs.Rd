@@ -32,5 +32,5 @@ This function blah blah blah...
 Any pertinent details....
 }
 \author{
-Who Do?
+From IPM book.....Schaub & Kery
 }

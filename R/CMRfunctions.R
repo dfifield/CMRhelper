@@ -1,3 +1,4 @@
+#'
 #'@export
 #'
 #'@title Simulate CJS data for 1 group at a time
@@ -26,18 +27,18 @@
 #'   column per occasion.
 #'
 #'@author
-#'  Who Do?
+#'  From IPM book.....Schaub & Kery
 #'
 simul.cjs<-function(phi,p,marked, tsm = FALSE)
 {
   n.occasions<-length(p)+1
 
-  if(tsm == 0){
+  if(tsm == FALSE){
     Phi<-matrix(phi,n.occasions-1,nrow=sum(marked),byrow=T)
     P<-matrix(p,n.occasions-1,nrow=sum(marked),byrow=T)
   }
 
-  if(tsm == 1){
+  if(tsm == TRUE){
     Phi <- matrix(0, ncol = n.occasions-1,nrow=sum(marked))
     for (i in 1:length(marked)){
       Phi[(sum(marked[1:i])-marked[i]+1):sum(marked[1:i]), i:(n.occasions-1)] <-
@@ -195,30 +196,66 @@ create.td = function(ch,
 
 #'@export
 #'
-#'@title Select model results
+#'@title Augment CMR model table
 #'
-#' @description Select a particular model of interest from a list of models.
+#' @description Adds numeric model rankings based on AICc, and model numbers
+#'     to a model table, as well as removing ~ from model names
 #'
-#' @param model_num (required, integer) the model number of interest
+#' @param mod.table (required, data.frame) the model table. This is the
+#'      \code{model.table} element of the object returned by
+#'     \link[RMark]{mark.wrapper()}.
 #'
-#' @details Converts a numeric \code{model_num} offset  to a symbolic model
-#'     name and extracts the named model from global variable \code{all.models} using
-#'     global variable \code{model.list}. This requires the following syntax in
-#'     the calling script:
+#' @details
+#'     The \code{model.table} element of the object returned by \link[RMark]{mark.wrapper()}
+#'     has one row per model ordered by AICc rank with internal \code{mark} model
+#'     number is encoded as the row-number of the dataframe.
 #'
-#'     \code{all.models = mark.wrapper(model.list, data = data.processed,
-#'        ddl = data.ddl, threads = 2)}
+#'     This function does four things to the input \code{model.table}:
 #'
-#'     It would be a good idea to replace these global vars with passed params
-#'     to make this more generic.
+#'  \itemize{
+#'     \item {creates a \code{model.rank} column giving the numeric rank of each
+#'       model as judged by AICc.}
+#'
+#'     \item{converts the internal \code{mark} model number encoded in the row names
+#'       to a \code{model.num} column}
+#'     \item{replaces the row names of \code{model.table} with \code{1:nrow(model.table)}}
+#'     \item{Removes the ~ character from the \code{model} column for prettier
+#'       printing}
+#' }
 #'
 #' @return
-#'    The chosen model.
+#'     The modified \code{model.table} dataframe.
 #'
-#' @author Who do?
+#' @author Sarah Gutowsky, Dave Fifield
 #'
-select_model_results <- function(model_num) {
-  all.models[[paste0(model.list$Phi[model_num], '.', model.list$p[model_num])]]
+augment_model_table <- function(model.table){
+  model.table$model.num <- as.numeric(row.names(model.table)) # the stupid output saves the model number from model.list as the row name, so I steal that
+  row.names(model.table) <- 1:nrow(model.table) # rename the rows in the results table to order from top-ranked to lowest ranked model, since model.table sorts by AIC
+  model.table$model.rank <- row.names(model.table) # now we can save a variable for the model rank based on the row numbers/row names
+  model.table$model <- gsub('~', '', model.table$model) # I like to change the model names from the default to remove the tildes for better printing, otherwise ugly subscripts
+  model.table
 }
 
-
+#' @export
+#'
+#' @title Select CMR model by rank
+#'
+#' @description Add numeric model rankings based on AICc to a model table
+#'
+#' @param mod.list (required) an object of class \code{marklist} as returned by
+#'     \link[RMark]{mark.wrapper()}.
+#'
+#' @details
+#'
+#' @return
+#'     If \code{rank} is a single integer, then the model with that ranking
+#'     is returned. If \code{rank} is a vector of integers, then a list of models
+#'     with those rankings is returned.
+#'
+#' @author Dave Fifield
+#'
+#'
+select_model_by_rank <- function(mlist, rank = 1){
+  # all.models[[paste0(model.list$Phi[model_num], '.', model.list$p[model_num])]]
+  message("Not implemented yet.")
+}
