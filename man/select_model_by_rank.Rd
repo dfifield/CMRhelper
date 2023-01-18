@@ -18,6 +18,14 @@ If \code{rank} is a single integer, then the model with that ranking
 \description{
 Add numeric model rankings based on AICc to a model table
 }
+\details{
+XXX replace with a more omnibus function called select_model that can select
+models by rank, model number, name (all allowed to be length n vectors to
+select multiple models). Or select by "phi=time", "p=time | groups | covariates",
+"phi=time + tsm", or as a formula phi = ~ time + tsm, or all models whose weight
+is > x, or all models within x AIC units of the top model (or even any arbitray
+model?)
+}
 \author{
-Dave Fifield
+Dave Fifield based on idea from Sarah Gutowsky?
 }

@@ -9,7 +9,7 @@ augment_model_table(model.table)
 \arguments{
 \item{mod.table}{(required, data.frame) the model table. This is the
  \code{model.table} element of the object returned by
-\link[RMark]{mark.wrapper()}.}
+\link[RMark]{mark.wrapper}().}
 }
 \value{
 The modified \code{model.table} dataframe.

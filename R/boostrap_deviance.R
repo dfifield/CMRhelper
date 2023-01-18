@@ -1,16 +1,20 @@
+#'@export
+#'
+#'@title Extract marked individuals
+#'
+#'@description Extracts numbers first marked at each occasion and in each group
+#'    from a model.
+#'
+#'@param x (required) a MARK model object as returned by
+#'    \link[RMark]{mark}().
+#'
+#'@return
+#'   Returns a 2D matrix of capture histories with one row per individual and one
+#'   column per occasion.
+#'
+#'@author Greg Robertson based on 3 argument version from ????
 
-# Mon Mar 21 18:25:10 2022 ------------------------------
-
-#Updated Mar30 to generalize to x instead of 'mymodel' which had been used in a few places
-
-#Updated 21Sept2022 to include modules that allow for fixed values
-#Could use some testing when n.groups > 1 - but it should work...
-
-
-#function to get number of new releases for each group*occasion
-#
-## XXXX this may be replaced by the more complex version with more
-## params defined in CMRfunctions.R
+# use this version everywhere (remove extra args from calls to the other one)
 Marked<-function(x) {
 
   n.groups <- ifelse(is.null(x$data$group.covariates), 1, nlevels(x$data$data$group))
@@ -21,9 +25,9 @@ Marked<-function(x) {
   {
 
     if(n.groups == 1){
-    ch <- x$data$data$ch
+     ch <- x$data$data$ch
     } else {
-    ch <- x$data$data$ch[x$data$data$group == g]
+     ch <- x$data$data$ch[x$data$data$group == g]
     }
 
     for(i in 1:x$data$nocc-1)
@@ -35,12 +39,22 @@ Marked<-function(x) {
   return(marked)
 }
 
-#Marked(x)
-
-# Mon Mar 21 16:10:12 2022 ------------------------------
-
-# works to here...
-
+#'
+#'@title ??
+#'
+#'@description ??
+#'
+#'@param x (required) a MARK model object as returned by
+#'    \link[RMark]{mark}().
+#'
+#'@details
+#'  Any pertinent details....
+#'
+#'@return
+#'
+#'@author
+#'  ???
+#'
 simul.boot<-function(x) {
 
   n.occasions <- x$data$nocc
@@ -135,6 +149,23 @@ simul.boot<-function(x) {
   return(chout)
 }
 
+
+#'
+#'@title ??
+#'
+#'@description ??
+#'
+#'@param x (required) a MARK model object as returned by
+#'    \link[RMark]{mark}().
+#'
+#'@details
+#'  Any pertinent details....
+#'
+#'@return
+#'
+#'@author
+#'  ???
+#'
 sims<-function(x, reps, tsm = FALSE)
 {
   deviance<-dim(reps)
@@ -170,7 +201,28 @@ sims<-function(x, reps, tsm = FALSE)
   out<-list(deviance.mean=mean(deviance),deviance.025=quantile(deviance,0.025),deviance.975=quantile(deviance,0.975))
 }
 
-# final function
+#'
+#'@export
+#'
+#'@title ??
+#'
+#'@description ??
+#'
+#'@param x (required) a MARK model object as returned by
+#'    \link[RMark]{mark}().
+#'
+#'@param reps (required)
+#'
+#'@param tsm (optional)
+#'
+#'@details
+#'  Any pertinent details....
+#'
+#'@return ??
+#'
+#'@author
+#'  Greg Robertson?
+#'
 bootstrap.deviance <- function(x, reps, tsm = FALSE) {
 
   sim.out <- sims(x, reps, tsm)
@@ -184,11 +236,3 @@ bootstrap.deviance <- function(x, reps, tsm = FALSE) {
   cat("modified c.hat =",c.hat,  "\n")
 
 }
-
-
-#reps <- 10
-#Here is what we'd need to put in our script to run the function
-# (replacing mymodel and reps):
-#bootstrap.deviance(x, reps, tsm = FALSE)
-
-

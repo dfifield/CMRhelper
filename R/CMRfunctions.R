@@ -3,7 +3,7 @@
 #'
 #'@title Simulate CJS data for 1 group at a time
 #'
-#'@description This function blah blah blah...
+#'@description This function simulates capture histories based on known phi and p.
 #'
 #'@param phi (required, numeric matrix) matrix of survival probabilities
 #'    (as a number between 0 and 1) with one row per group, one column per
@@ -23,11 +23,11 @@
 #'  Any pertinent details....
 #'
 #'@return
-#'   Returns a 2D matrix of capture histories with one row per individual and 1
+#'   Returns a 2D matrix of capture histories with one row per individual and one
 #'   column per occasion.
 #'
 #'@author
-#'  From IPM book.....Schaub & Kery
+#'  From IPM book p 178.....Schaub & Kery
 #'
 simul.cjs<-function(phi,p,marked, tsm = FALSE)
 {
@@ -90,7 +90,7 @@ simul.cjs<-function(phi,p,marked, tsm = FALSE)
 #'
 pasty<-function(x)
 {
-  k<-ncol(x) # XXX Not used?
+
   n<-nrow(x)
   out<-array(dim=n)
   for (i in 1:n)
@@ -98,54 +98,6 @@ pasty<-function(x)
     out[i]<-paste(x[i,],collapse="")
   }
   return(out)
-}
-
-
-# XXX from "set up bootstrap.R"
-Marked<-function(x) {
-
-  n.groups <- ifelse(is.null(x$data$group.covariates), 1, nlevels(x$data$data$group))
-
-  marked<-matrix(nrow=n.groups,ncol=x$data$nocc-1)
-
-  for(g in 1:n.groups)
-  {
-
-    if(n.groups == 1){
-     ch <- x$data$data$ch
-    } else {
-     ch <- x$data$data$ch[x$data$data$group == g]
-    }
-
-    for(i in 1:x$data$nocc-1)
-    {
-      ch1<-ch[(as.numeric(substr(ch,1,i)))==1]
-      marked[g,i]<-length(ch1)
-    }
-  }
-  return(marked)
-}
-
-
-# xxx from "CMR functions.R"
-# # XXX need to remove reference to global variable "Groups" and
-# replace with reference to param "groups"
-Marked<-function(data=dipper,n.occasions=7,groups=Groups)
-{
-  group<-data[,2]
-  marked<-matrix(nrow=length(Groups),ncol=n.occasions)
-  for(g in 1:length(groups))
-  {
-    data_<-subset(data,group==groups[g])
-    data_
-    ch<-data_$ch
-    for(i in 1:n.occasions)
-    {
-      ch1<-ch[(as.numeric(substr(ch,1,i)))==1]
-      marked[g,i]<-length(ch1)
-    }
-  }
-  return(marked)
 }
 
 #'@export
@@ -203,7 +155,7 @@ create.td = function(ch,
 #'
 #' @param mod.table (required, data.frame) the model table. This is the
 #'      \code{model.table} element of the object returned by
-#'     \link[RMark]{mark.wrapper()}.
+#'     \link[RMark]{mark.wrapper}().
 #'
 #' @details
 #'     The \code{model.table} element of the object returned by \link[RMark]{mark.wrapper()}
@@ -236,6 +188,13 @@ augment_model_table <- function(model.table){
   model.table
 }
 
+#' XXX replace with a more omnibus function called select_model that can select
+#' models by rank, model number, name (all allowed to be length n vectors to
+#' select multiple models). Or select by "phi=time", "p=time | groups | covariates",
+#' "phi=time + tsm", or as a formula phi = ~ time + tsm, or all models whose weight
+#' is > x, or all models within x AIC units of the top model (or even any arbitray
+#' model?)
+#'
 #' @export
 #'
 #' @title Select CMR model by rank
@@ -252,7 +211,7 @@ augment_model_table <- function(model.table){
 #'     is returned. If \code{rank} is a vector of integers, then a list of models
 #'     with those rankings is returned.
 #'
-#' @author Dave Fifield
+#' @author Dave Fifield based on idea from Sarah Gutowsky?
 #'
 #'
 select_model_by_rank <- function(mlist, rank = 1){

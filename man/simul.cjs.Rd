@@ -22,15 +22,15 @@ marked with one row per group, and one column per number of occasions - 1.}
 time since marking effect should be included.}
 }
 \value{
-Returns a 2D matrix of capture histories with one row per individual and 1
+Returns a 2D matrix of capture histories with one row per individual and one
   column per occasion.
 }
 \description{
-This function blah blah blah...
+This function simulates capture histories based on known phi and p.
 }
 \details{
 Any pertinent details....
 }
 \author{
-From IPM book.....Schaub & Kery
+From IPM book p 178.....Schaub & Kery
 }
