@@ -263,7 +263,7 @@ sims<-function(x, reps, tsm = FALSE)
 #' Returns bootstrapped c.hat.
 #'
 #'@author
-#'  Greg Robertson?
+#'  Sarah Gutowsky, Greg Robertson
 #'
 bootstrap.deviance <- function(x, reps, tsm = FALSE) {
 

@@ -24,5 +24,5 @@ Returns bootstrapped c.hat.
 Any pertinent details....
 }
 \author{
-Greg Robertson?
+Sarah Gutowsky, Greg Robertson
 }
