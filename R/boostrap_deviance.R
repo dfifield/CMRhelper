@@ -259,7 +259,8 @@ sims<-function(x, reps, tsm = FALSE)
 #'@details
 #'  Any pertinent details....
 #'
-#'@return ??
+#'@return
+#' Returns bootstrapped c.hat.
 #'
 #'@author
 #'  Greg Robertson?
@@ -276,4 +277,5 @@ bootstrap.deviance <- function(x, reps, tsm = FALSE) {
   c.hat<-data.deviance/sim.out$deviance.mean
   cat("modified c.hat =",c.hat,  "\n")
 
+  c.hat
 }

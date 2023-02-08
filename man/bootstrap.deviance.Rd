@@ -15,7 +15,7 @@ bootstrap.deviance(x, reps, tsm = FALSE)
 \item{tsm}{(optional)}
 }
 \value{
-??
+Returns bootstrapped c.hat.
 }
 \description{
 ??
