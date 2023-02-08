@@ -39,6 +39,47 @@ Marked<-function(x) {
   return(marked)
 }
 
+#'@title Extract marked individuals - old way
+#'
+#'@description Extracts numbers first marked at each occasion and in each group.
+#'
+#'@param data (required) the data.
+#'
+#'@param n.occasions (required) number of occasions.
+#'
+#'@param groups (required) a vector of group labels.
+#'
+#'@details This function is deprecated and may go away.
+#'
+#'    The default param values (which were specific to the dipper data)
+#'    have been removed. Also fixed a bug where "groups" was referred to as
+#'    "Groups" in the function.
+#'@return
+#'   Returns a 2D matrix of capture histories with one row per individual and one
+#'   column per occasion.
+#'
+#'@author ??
+
+Marked.3 <- function(data, n.occasions, groups)
+{
+  group<-data[,2]
+  marked<-matrix(nrow=length(groups),ncol=n.occasions)
+  for(g in 1:length(groups))
+  {
+    data_<-subset(data,group==groups[g])
+    data_
+    ch<-data_$ch
+    for(i in 1:n.occasions)
+    {
+      ch1<-ch[(as.numeric(substr(ch,1,i)))==1]
+      marked[g,i]<-length(ch1)
+    }
+  }
+  return(marked)
+}
+
+
+
 #'
 #'@title ??
 #'

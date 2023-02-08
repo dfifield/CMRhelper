@@ -218,3 +218,31 @@ select_model_by_rank <- function(mlist, rank = 1){
   # all.models[[paste0(model.list$Phi[model_num], '.', model.list$p[model_num])]]
   message("Not implemented yet.")
 }
+
+# select model results by number from the model list produced by
+# the mark.wrapper function from RMark
+# must use syntax: all.models=mark.wrapper(model.list,data=data.processed,ddl=data.ddl,threads=2)
+#' @export
+#'
+#' @title Select CMR model by model number
+#'
+#' @description Add numeric model rankings based on AICc to a model table
+#'
+#' @param mod.list (required) an object of class \code{marklist} as returned by
+#'     \link[RMark]{mark.wrapper()}.
+#'
+#' @details Select model results by number from the model list produced by
+#'     the mark.wrapper function from RMark must use syntax:
+#'
+#'     \code(all.models=mark.wrapper(model.list,data=data.processed,ddl=data.ddl,threads=2)}
+#'
+#'     The intention is to replace this with a more general \code(select_model)
+#'     function.
+#' @return
+#'
+#' @author Greg Robertson
+#'
+#'
+select_model_results <- function(model_num){
+  all.models[[paste0(model.list$Phi[model_num], '.', model.list$p[model_num])]]
+}
