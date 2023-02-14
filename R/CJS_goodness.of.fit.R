@@ -1,11 +1,12 @@
 #'@export
 #'
-#'@title Goodness of fit testing
+#'@title Goodness of fit testing of CMR data for a CJS model
 #'
-#'@description Run goodness of fit tests from R2UCare on CJS process data
+#'@description Run goodness of fit tests from R2ucare on CJS process data
 #'
-#'@param data.processed (required) a MARK model object as returned by
-#'    \link[RMark]{process.data}().
+#'@param data.processed (required) a list dataframe with several variables
+#'  (e.g., number of capture occasions, time intervals) returned by
+#'  \link[RMark]{process.data} based on live-only capture histories and model="CJS".
 #'
 #'@param verbose (optional, default = FALSE) if TRUE, prints test details
 #'
@@ -13,8 +14,8 @@
 #'  test with the option to print details of each test to the console.
 #'
 #'
-#'@return
-#'   Returns a dataframe with goodness of fit testing results from overall CJS, and tests 2CT, 3SR, 3SM, 2CL
+#'@return Returns a dataframe with goodness of fit testing results from overall
+#'CJS, and tests 2CT, 3SR, 3SM, 2CL
 
 #'@author Sarah Gutowsky
 
