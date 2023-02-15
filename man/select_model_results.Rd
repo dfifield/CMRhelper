@@ -7,15 +7,30 @@
 select_model_results(model_num)
 }
 \arguments{
-\item{mod.list}{(required) an object of class \code{marklist} as returned by
-\link[RMark]{mark.wrapper()}.}
+\item{model_num}{(required) an integer indicating the model row number in the
+dataframe returned by \link[RMark]{create.model.list()}}
+}
+\value{
+a list of model output of the correspondingly numbered model
 }
 \description{
-Add numeric model rankings based on AICc to a model table
+Select a model from a \code{marklist} as returned by
+  \link[RMark]{mark.wrapper()} based on the model number in the model list
+  returned by \link[RMark]{create.model.list()}
 }
 \details{
+XXX replace with a more omnibus function called select_model that can select
+models by rank, model number, name (all allowed to be length n vectors to
+select multiple models). Or select by "phi=time", "p=time | groups |
+covariates", "phi=time + tsm", or as a formula phi = ~ time + tsm, or all
+models whose weight is > x, or all models within x AIC units of the top model
+(or even any arbitray model?)
 
+Select a model from a \code{marklist} as returned by
+  \link[RMark]{mark.wrapper()} based on the model number in the model list
+  returned by \link[RMark]{create.model.list()}, must use syntax:
+  \code{all.models=mark.wrapper(model.list,data=data.processed,ddl=data.ddl,threads=2}.
 }
 \author{
-Greg Robertson
+Greg Robertson and Sarah Gutowsky
 }

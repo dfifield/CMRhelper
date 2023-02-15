@@ -150,97 +150,105 @@ create.td = function(ch,
 #'
 #'@title Augment CMR model table
 #'
-#' @description Adds numeric model rankings based on AICc, and model numbers
-#'     to a model table, as well as removing ~ from model names
+#'@description Adds numeric model rankings based on AICc, and model numbers to
+#'  the \code{model.table} element in the list returned by
+#'  \link[RMark]{mark.wrapper}, as well as removing ~ from model names. Model
+#'  numbers correspond to the order of model output elements in the list before
+#'  \code{model.table}.
 #'
-#' @param mod.table (required, data.frame) the model table. This is the
-#'      \code{model.table} element of the object returned by
-#'     \link[RMark]{mark.wrapper}().
+#'@param all.models.output (required, list) the list with all model outputs and the
+#'  \code{model.table} element returned by \link[RMark]{mark.wrapper}().
 #'
-#' @details
-#'     The \code{model.table} element of the object returned by \link[RMark]{mark.wrapper()}
-#'     has one row per model ordered by AICc rank with internal \code{mark} model
-#'     number is encoded as the row-number of the dataframe.
+#'@details The \code{model.table} element of the list returned by
+#'  \link[RMark]{mark.wrapper()} has one row per model ordered by AICc rank with
+#'  internal \code{mark} model number encoded as the row-number of the
+#'  dataframe.
 #'
-#'     This function does four things to the input \code{model.table}:
+#'  This function does four things to the \code{model.table} element of the
+#'  input \code{all.models.output}:
 #'
 #'  \itemize{
-#'     \item {creates a \code{model.rank} column giving the numeric rank of each
-#'       model as judged by AICc.}
 #'
-#'     \item{converts the internal \code{mark} model number encoded in the row names
-#'       to a \code{model.num} column}
-#'     \item{replaces the row names of \code{model.table} with \code{1:nrow(model.table)}}
-#'     \item{Removes the ~ character from the \code{model} column for prettier
-#'       printing}
-#' }
+#'  \item {creates a \code{model.rank} column giving the numeric rank of each
+#'  model as judged by AICc.}
 #'
-#' @return
-#'     The modified \code{model.table} dataframe.
+#'  \item{converts the internal \code{mark} model number encoded in the row
+#'  names to a \code{model.num} column}
 #'
-#' @author Sarah Gutowsky, Dave Fifield
+#'  \item{replaces the row names of \code{model.table} with
+#'  \code{1:nrow(model.table)}}
 #'
-augment_model_table <- function(model.table){
-  model.table$model.num <- as.numeric(row.names(model.table)) # the stupid output saves the model number from model.list as the row name, so I steal that
-  row.names(model.table) <- 1:nrow(model.table) # rename the rows in the results table to order from top-ranked to lowest ranked model, since model.table sorts by AIC
-  model.table$model.rank <- row.names(model.table) # now we can save a variable for the model rank based on the row numbers/row names
-  model.table$model <- gsub('~', '', model.table$model) # I like to change the model names from the default to remove the tildes for better printing, otherwise ugly subscripts
-  model.table
+#'  \item{Removes the ~ character from the \code{model} column for prettier
+#'  printing} }
+#'
+#'@return The modified \code{all.models.output} list with new columns in the \code{model.table}.
+#'
+#'@author Sarah Gutowsky, Dave Fifield
+#'
+augment.model.table <- function(all.models.output){
+  all.models.output$model.table$model.num <- as.numeric(row.names(all.models.output$model.table)) # the stupid output saves the model number from all.models.output as the row name, so I steal that
+  row.names(all.models.output$model.table) <- 1:nrow(all.models.output$model.table) # rename the rows in the results table to order from top-ranked to lowest ranked model, since model.table sorts by AIC
+  all.models.output$model.table$model.rank <- row.names(all.models.output$model.table) # now we can save a variable for the model rank based on the row numbers/row names
+  all.models.output$model.table$model <- gsub('~', '', all.models.output$model.table$model) # I like to change the model names from the default to remove the tildes for better printing, otherwise ugly subscripts
+  all.models.output
 }
 
-#' XXX replace with a more omnibus function called select_model that can select
-#' models by rank, model number, name (all allowed to be length n vectors to
-#' select multiple models). Or select by "phi=time", "p=time | groups | covariates",
-#' "phi=time + tsm", or as a formula phi = ~ time + tsm, or all models whose weight
-#' is > x, or all models within x AIC units of the top model (or even any arbitray
-#' model?)
-#'
 #' @export
 #'
 #' @title Select CMR model by rank
 #'
-#' @description Add numeric model rankings based on AICc to a model table
+#' @description Extract model output from list of models based on model AIC rank
 #'
-#' @param mod.list (required) an object of class \code{marklist} as returned by
-#'     \link[RMark]{mark.wrapper()}.
+#' @param all.models.output (required, list) the list with all model outputs and
+#'   the \code{model.table} element returned by \link[RMark]{mark.wrapper} and
+#'   augmented with \link[CMRhelper]{augment.model.table}
 #'
-#' @details
+#' @param rank (required, integer) a number indicating the desired model rank
 #'
-#' @return
-#'     If \code{rank} is a single integer, then the model with that ranking
-#'     is returned. If \code{rank} is a vector of integers, then a list of models
-#'     with those rankings is returned.
+#' @details This function selects a model from a list of model outputs returned
+#'   by \link[RMark]{mark.wrapper} based on the model AIC rank. Model AIC rank
+#'   is determined by \link[CMRhelper]{augment.model.table}, thus the user must
+#'   augment the model table first before using this function.
 #'
-#' @author Dave Fifield based on idea from Sarah Gutowsky?
+#' @return a list of model output of the correspondingly ranked model
+#'
+#' @author Sarah Gutowsky
 #'
 #'
-select_model_by_rank <- function(mlist, rank = 1){
-  # all.models[[paste0(model.list$Phi[model_num], '.', model.list$p[model_num])]]
-  message("Not implemented yet.")
+select.model.by.rank <- function(all.models.output, rank){
+
+  print(paste0("Model Rank ", rank, ": ",
+    all.models.output$model.table$model[all.models.output$model.table$model.rank==rank]))
+  return(all.models.output[[all.models.output$model.table$model.num[all.models.output$model.table$model.rank==rank]]])
+
 }
 
-# select model results by number from the model list produced by
-# the mark.wrapper function from RMark
-# must use syntax: all.models=mark.wrapper(model.list,data=data.processed,ddl=data.ddl,threads=2)
+#' XXX replace with a more omnibus function called select_model that can select
+#' models by rank, model number, name (all allowed to be length n vectors to
+#' select multiple models). Or select by "phi=time", "p=time | groups |
+#' covariates", "phi=time + tsm", or as a formula phi = ~ time + tsm, or all
+#' models whose weight is > x, or all models within x AIC units of the top model
+#' (or even any arbitray model?)
+
 #' @export
 #'
 #' @title Select CMR model by model number
 #'
-#' @description Add numeric model rankings based on AICc to a model table
+#' @description Select a model from a \code{marklist} as returned by
+#'   \link[RMark]{mark.wrapper()} based on the model number in the model list
+#'   returned by \link[RMark]{create.model.list()}
 #'
-#' @param mod.list (required) an object of class \code{marklist} as returned by
-#'     \link[RMark]{mark.wrapper()}.
+#' @param model_num (required) an integer indicating the model row number in the
+#'   dataframe returned by \link[RMark]{create.model.list()}
 #'
-#' @details Select model results by number from the model list produced by
-#'     the mark.wrapper function from RMark must use syntax:
+#' @details Select a model from a \code{marklist} as returned by
+#'   \link[RMark]{mark.wrapper()} based on the model number in the model list
+#'   returned by \link[RMark]{create.model.list()}, must use syntax:
+#'   \code{all.models=mark.wrapper(model.list,data=data.processed,ddl=data.ddl,threads=2}.
 #'
-#'     \code(all.models=mark.wrapper(model.list,data=data.processed,ddl=data.ddl,threads=2)}
+#' @return a list of model output of the correspondingly numbered model
 #'
-#'     The intention is to replace this with a more general \code(select_model)
-#'     function.
-#' @return
-#'
-#' @author Greg Robertson
+#' @author Greg Robertson and Sarah Gutowsky
 #'
 #'
 select_model_results <- function(model_num){

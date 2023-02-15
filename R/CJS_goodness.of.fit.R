@@ -6,16 +6,19 @@
 #'
 #'@param data.processed (required) a list dataframe with several variables
 #'  (e.g., number of capture occasions, time intervals) returned by
-#'  \link[RMark]{process.data} based on live-only capture histories and model="CJS".
+#'  \link[RMark]{process.data} based on live-only capture histories and
+#'  model="CJS".
 #'
 #'@param verbose (optional, default = FALSE) if TRUE, prints test details
 #'
 #'@details This function produces a dataframe of summary stats from each R2ucare
 #'  test with the option to print details of each test to the console.
+#'  Note: future versions will allow the user to specify group covariates, but
+#'  currently this feature is unavailable.
 #'
 #'
 #'@return Returns a dataframe with goodness of fit testing results from overall
-#'CJS, and tests 2CT, 3SR, 3SM, 2CL
+#'  CJS, and tests 2CT, 3SR, 3SM, 2CL
 
 #'@author Sarah Gutowsky
 

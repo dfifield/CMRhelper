@@ -2,11 +2,11 @@
 
 export(CJS.GOF.testing)
 export(Marked)
-export(augment_model_table)
+export(augment.model.table)
 export(bootstrap.deviance)
 export(create.td)
 export(force.cleanup)
 export(pasty)
-export(select_model_by_rank)
+export(select.model.by.rank)
 export(select_model_results)
 export(simul.cjs)
