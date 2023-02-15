@@ -251,6 +251,6 @@ select.model.by.rank <- function(all.models.output, rank){
 #' @author Greg Robertson and Sarah Gutowsky
 #'
 #'
-select_model_results <- function(model_num){
+select.model.results <- function(model_num){
   all.models[[paste0(model.list$Phi[model_num], '.', model.list$p[model_num])]]
 }
