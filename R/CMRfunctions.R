@@ -31,7 +31,7 @@
 #'
 simul.cjs<-function(phi,p,marked, tsm = FALSE)
 {
-  n.occasions<-length(p)+1
+  n.occasions<-dim(p)[2]+1
 
   if(tsm == FALSE){
     Phi<-matrix(phi,n.occasions-1,nrow=sum(marked),byrow=T)
@@ -52,8 +52,17 @@ simul.cjs<-function(phi,p,marked, tsm = FALSE)
 
   #n.occasions<-dim(Phi)[2]+1
   CH<-matrix(0,ncol=n.occasions,nrow=sum(marked))
-  #define a vector with marking occasion
-  mark.occ<-rep(1:length(marked),marked[1:length(marked)])
+
+  #define a vector with marking occasions
+  mark.occ <- NULL
+
+  for(i in 1:n.groups) {
+    for (j in 1:(n.occasions -1)) {
+      add <- rep(j, each = marked[i, j])
+      mark.occ <- c(mark.occ,add)
+     }
+  }
+
   #fill in CH
   for (i in 1:sum(marked))
   {
