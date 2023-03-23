@@ -1,4 +1,3 @@
-library(CMRhelper)
 library(RMark)
 
 # Sat Mar 19 09:49:53 2022 ------------------------------
@@ -75,3 +74,6 @@ mymodel <- mark(data.proc, data.ddl,
 
 
 str(mymodel)
+
+
+bootstrap.deviance(mymodel, 2)

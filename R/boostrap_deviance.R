@@ -194,18 +194,18 @@ extract.model<-function(x) {
     }
   }
 
-  extract.list <<- list(marked = marked,
-                        Phi = Phi,
-                        P = P,
-                        n.occasions = n.occasions,
-                        n.groups = n.groups,
-                        mark.occ = mark.occ,
-                        CH = CH
+  res <- list(marked = marked,
+       Phi = Phi,
+       P = P,
+       n.occasions = n.occasions,
+       n.groups = n.groups,
+       mark.occ = mark.occ,
+       CH = CH
   )
 
+  return(res)
+
 }
-
-
 
 #'
 #'@title Simulate capture histories from a fitted CJS model
@@ -240,7 +240,7 @@ extract.model<-function(x) {
 # right now both are done with every call to simul.boot - but don't need
 # to run 1) every time
 
-simul.boot <- function(extract = extract.list) {
+simul.boot <- function(extract) {
 
   a <- within(extract,{
     #fill in CH
@@ -282,7 +282,7 @@ simul.boot <- function(extract = extract.list) {
 #'@author
 #'  Sarah Gutowksy, with further options by Greg Robertson
 #'
-sims<-function(x, reps, tsm = FALSE)
+sims<-function(x, reps, tsm = FALSE, ...)
 {
   deviance<-dim(reps)
   for (i in 1:reps)
@@ -290,13 +290,13 @@ sims<-function(x, reps, tsm = FALSE)
     cat("iteration = ", iter <- i, "\n")
 
     if(x$number.of.groups == 1){
-      sim.processed <- RMark::process.data(simul.boot(), model="CJS")
+      sim.processed <- RMark::process.data(simul.boot(...), model="CJS")
       sim.ddl=RMark::make.design.data(sim.processed)
       global.sim<-RMark::mark(sim.processed,sim.ddl,
                               model.parameters=list(Phi=list(formula=~time),p=list(formula=~time)),
                               output=FALSE,silent=TRUE)
     } else {
-      sim.processed <- RMark::process.data(simul.boot(), model="CJS",groups = "group")
+      sim.processed <- RMark::process.data(simul.boot(...), model="CJS",groups = "group")
       sim.ddl=RMark::make.design.data(sim.processed)
       if(tsm == TRUE){
         sim.ddl <- RMark::add.design.data(sim.processed, sim.ddl,
@@ -345,8 +345,8 @@ sims<-function(x, reps, tsm = FALSE)
 #'
 bootstrap.deviance <- function(x, reps, tsm = FALSE) {
 
-  extract.model(x)
-  sim.out <- sims(x, reps, tsm)
+  extract.list <- extract.model(x)
+  sim.out <- sims(x, reps, tsm, extract.list)
   fetch.deviance <- function(y) y$results$lnl
   data.deviance <- fetch.deviance(x)
   sim.ci<-c(sim.out$deviance.025,sim.out$deviance.975)
@@ -358,5 +358,3 @@ bootstrap.deviance <- function(x, reps, tsm = FALSE) {
 
   cbind(c.hat, data.deviance/sim.out$deviance.975, data.deviance/sim.out$deviance.025)
 }
-
-bootstrap.deviance(mymodel, 2)
