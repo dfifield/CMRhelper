@@ -60,7 +60,7 @@ data.ddl <- make.design.data(data.proc)
 mymodel <- mark(data.proc, data.ddl,
                 model.parameters = list(Phi = list(formula = ~time, fixed=list(time=1, value = 0.8)), p = list(formula = ~time, fixed=list(time=3, value = 0.8))))
 
-# alternat method of fixing values in the ddl directly
+# alternate method of fixing values in the ddl directly
 
 
 mydata <- data.frame(ch = pasty(simul.cjs(phi,p,marked)), group = rep(1:n.groups, times = rowSums(marked)))
@@ -76,4 +76,4 @@ mymodel <- mark(data.proc, data.ddl,
 str(mymodel)
 
 
-bootstrap.deviance(mymodel, 2)
+bootstrap.deviance(mymodel, 10)

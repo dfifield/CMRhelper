@@ -82,11 +82,11 @@ Marked.3 <- function(data, n.occasions, groups)
 
 
 #'
-#'@title Simulate capture histories from a fitted CJS model
+#'@title Extract values from a mark object needed to simulate capture histories
 #'
-#'@description This function takes a fitted CJS mark model, extracts relevant details
-#'  (numbers marked and recaptured in each group(s) and estimated \phi and *p* values)
-#'  and simulates a new capture history with the same structure and rates.
+#'@description This function takes a fitted CJS mark model, and extracts relevant details
+#'  (numbers marked and recaptured in each group(s) and estimated \phi and *p* values).
+#'
 #'
 #'@param x (required) a MARK model object as returned by
 #'    \link[RMark]{mark}().
@@ -94,25 +94,17 @@ Marked.3 <- function(data, n.occasions, groups)
 #'@details
 #'  This function is designed for relatively straight forward models, although it
 #'  can handle age effects, as estimates are extracted directly from their PIMs.
-#'  Any individual covariates are ignored, however covariates #'  in the design
+#'  Any individual covariates are ignored, however covariates in the design
 #'  matrix would be included, as they are reflected in the PIMs.
 #'
 #'@return
-#'  A simulated capture history formatted as a data.frame ready for analysis with
-#'  usual RMARK functions. Generally sent to \link[RMark]{process.data}() as the
-#'  next step.
+#'  A list with needed values to simulate a capture history. Generally sent to
+#'  \link[CMRhelper]{simul.boot}() as the next step.
 #'
 #'
 #'@author
-#'  Simulation piece taken from Kéry and Shaub's (2012) simul.cjs function -
-#'  further modified by Sarah Gutowsky and Greg Robertson
+#'  Greg Robertson
 #'
-
-# add a new function to split simul.boot into two steps
-# 1) extract needed stuff from model
-# 2) do the simulation
-# right now both are done with every call to simul.boot - but don't need
-# to run 1) every time
 
 
 extract.model<-function(x) {
@@ -210,17 +202,14 @@ extract.model<-function(x) {
 #'
 #'@title Simulate capture histories from a fitted CJS model
 #'
-#'@description This function takes a fitted CJS mark model, extracts relevant details
-#'  (numbers marked and recaptured in each group(s) and estimated \phi and *p* values)
-#'  and simulates a new capture history with the same structure and rates.
+#'@description Simulates a new capture history with the same structure and rates.
 #'
-#'@param x (required) a MARK model object as returned by
-#'    \link[RMark]{mark}().
+#'@param x (required) a list as returned from \link[CMRhelper]{extract.model}.
 #'
 #'@details
 #'  This function is designed for relatively straight forward models, although it
 #'  can handle age effects, as estimates are extracted directly from their PIMs.
-#'  Any individual covariates are ignored, however covariates #'  in the design
+#'  Any individual covariates are ignored, however covariates in the design
 #'  matrix would be included, as they are reflected in the PIMs.
 #'
 #'@return
@@ -230,15 +219,10 @@ extract.model<-function(x) {
 #'
 #'
 #'@author
-#'  Simulation piece taken from Kéry and Shaub's (2012) simul.cjs function -
+#'  Simulation piece largely taken from Kéry and Shaub's (2012) simul.cjs function -
 #'  further modified by Sarah Gutowsky and Greg Robertson
 #'
 
-# add a new function to split simul.boot into two steps
-# 1) extract needed stuff from model
-# 2) do the simulation
-# right now both are done with every call to simul.boot - but don't need
-# to run 1) every time
 
 simul.boot <- function(extract) {
 
@@ -267,7 +251,7 @@ simul.boot <- function(extract) {
 #'
 #'@title Perform a mark analysis on simulated capture histories
 #'
-#'@description ??
+#'@description Largely wrapper for setting up a mark analysis
 #'
 #'@param x (required) a MARK model object as returned by
 #'    \link[RMark]{mark}().
@@ -277,7 +261,7 @@ simul.boot <- function(extract) {
 #'
 #'@return
 #'
-#'  A data.frame "out" of mean deviance values along with 95% confidence limits
+#'  A list of mean deviance values along with 95% confidence limits
 #'
 #'@author
 #'  Sarah Gutowksy, with further options by Greg Robertson
@@ -323,8 +307,9 @@ sims<-function(x, reps, tsm = FALSE, ...)
 #'@title Calculate a bootstrapped c-hat value from a fitted CJS mark model
 #'
 #'@description This function takes a fitted mark model and passes it to
-#'    \link[CMRhelper]{simul.boot}() to extract relevant information from the
-#'    model simulates a capture history based on the model. This process is
+#'    \link[CMRhelper]{extract.model}() to extract relevant information from the
+#'    model and then passes those to \link[CMRhelper]{sims}() to simulate and
+#'    analyse a set capture history based on the model. This process is
 #'    repeated @param reps times and a bootstrapped c-hat value is calculated.
 #'
 #'@param x (required) a MARK model object as returned by
