@@ -2,20 +2,28 @@
 % Please edit documentation in R/boostrap_deviance.R
 \name{simul.boot}
 \alias{simul.boot}
-\title{??}
+\title{Simulate capture histories from a fitted CJS model}
 \usage{
-simul.boot(x)
+simul.boot(extract)
 }
 \arguments{
-\item{x}{(required) a MARK model object as returned by
-\link[RMark]{mark}().}
+\item{x}{(required) a list as returned from \link[CMRhelper]{extract.model}.}
+}
+\value{
+A simulated capture history formatted as a data.frame ready for analysis with
+ usual RMARK functions. Generally sent to \link[RMark]{process.data}() as the
+ next step.
 }
 \description{
-??
+Simulates a new capture history with the same structure and rates.
 }
 \details{
-Any pertinent details....
+This function is designed for relatively straight forward models, although it
+ can handle age effects, as estimates are extracted directly from their PIMs.
+ Any individual covariates are ignored, however covariates in the design
+ matrix would be included, as they are reflected in the PIMs.
 }
 \author{
-???
+Simulation piece largely taken from Kéry and Shaub's (2012) simul.cjs function -
+ further modified by Sarah Gutowsky and Greg Robertson
 }

@@ -2,20 +2,23 @@
 % Please edit documentation in R/boostrap_deviance.R
 \name{sims}
 \alias{sims}
-\title{??}
+\title{Perform a mark analysis on simulated capture histories}
 \usage{
-sims(x, reps, tsm = FALSE)
+sims(x, reps, tsm = FALSE, ...)
 }
 \arguments{
 \item{x}{(required) a MARK model object as returned by
 \link[RMark]{mark}().}
 }
+\value{
+A list of mean deviance values along with 95% confidence limits
+}
 \description{
-??
+Largely wrapper for setting up a mark analysis
 }
 \details{
 Any pertinent details....
 }
 \author{
-???
+Sarah Gutowksy, with further options by Greg Robertson
 }

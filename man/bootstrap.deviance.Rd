@@ -2,7 +2,7 @@
 % Please edit documentation in R/boostrap_deviance.R
 \name{bootstrap.deviance}
 \alias{bootstrap.deviance}
-\title{??}
+\title{Calculate a bootstrapped c-hat value from a fitted CJS mark model}
 \usage{
 bootstrap.deviance(x, reps, tsm = FALSE)
 }
@@ -15,10 +15,14 @@ bootstrap.deviance(x, reps, tsm = FALSE)
 \item{tsm}{(optional)}
 }
 \value{
-Returns bootstrapped c.hat.
+Returns a bootstrapped c.hat.
 }
 \description{
-??
+This function takes a fitted mark model and passes it to
+   \link[CMRhelper]{extract.model}() to extract relevant information from the
+   model and then passes those to \link[CMRhelper]{sims}() to simulate and
+   analyse a set capture history based on the model. This process is
+   repeated @param reps times and a bootstrapped c-hat value is calculated.
 }
 \details{
 Any pertinent details....

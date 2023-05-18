@@ -19,5 +19,5 @@ Extracts numbers first marked at each occasion and in each group
    from a model.
 }
 \author{
-Greg Robertson based on 3 argument version from ????
+modified from XXXX by Greg Robertson - this was taken from the interweb ...
 }
