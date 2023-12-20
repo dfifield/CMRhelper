@@ -20,62 +20,77 @@
 #'    time since marking effect should be included.
 #'
 #'@details
-#'  Any pertinent details....
+#'  Same as code for the book see \code(Author) below, with the addition of
+#'  the tsm argument.
 #'
 #'@return
 #'   Returns a 2D matrix of capture histories with one row per individual and one
 #'   column per occasion.
 #'
 #'@author
-#'  From IPM book p 178.....Schaub & Kery
+#'  Modified from Kéry & Schaub, 2012. Bayesian Population Analysis, p. 178.
+#'  Original code available here: \code{https://www.vogelwarte.ch/modx/de/projekte/publikationen/bpa/complete-code-and-data-files-of-the-book}
 #'
-simul.cjs<-function(phi,p,marked, tsm = FALSE)
+simul.cjs <- function(phi, p, marked, tsm = FALSE)
 {
-  n.occasions<-dim(p)[2]+1
+  n.occasions <- dim(p)[2] + 1
 
-  if(tsm == FALSE){
-    Phi<-matrix(phi,n.occasions-1,nrow=sum(marked),byrow=T)
-    P<-matrix(p,n.occasions-1,nrow=sum(marked),byrow=T)
+  if (tsm == FALSE) {
+    Phi <- matrix(phi,
+                  n.occasions - 1,
+                  nrow = sum(marked),
+                  byrow = T)
+    P <- matrix(p,
+                n.occasions - 1,
+                nrow = sum(marked),
+                byrow = T)
   }
 
-  if(tsm == TRUE){
-    Phi <- matrix(0, ncol = n.occasions-1,nrow=sum(marked))
-    for (i in 1:length(marked)){
-      Phi[(sum(marked[1:i])-marked[i]+1):sum(marked[1:i]), i:(n.occasions-1)] <-
-        matrix(rep(phi[c(i+n.occasions-2,seq(i, (n.occasions-2),
-            length.out = n.occasions - i -1))], marked[i]),
-            ncol = n.occasions-i, byrow = TRUE)
+  if (tsm == TRUE) {
+    Phi <- matrix(0, ncol = n.occasions - 1, nrow = sum(marked))
+    for (i in 1:length(marked)) {
+      Phi[(sum(marked[1:i]) - marked[i] + 1):sum(marked[1:i]), i:(n.occasions -
+                                                                    1)] <-
+        matrix(rep(phi[c(i + n.occasions - 2, seq(i, (n.occasions - 2),
+                                                  length.out = n.occasions - i - 1))], marked[i]),
+               ncol = n.occasions - i, byrow = TRUE)
     }
 
-    P<-matrix(p,n.occasions-1,nrow=sum(marked),byrow=T)
+    P <- matrix(p,
+                n.occasions - 1,
+                nrow = sum(marked),
+                byrow = T)
   }
 
   #n.occasions<-dim(Phi)[2]+1
-  CH<-matrix(0,ncol=n.occasions,nrow=sum(marked))
+  CH <- matrix(0, ncol = n.occasions, nrow = sum(marked))
 
   #define a vector with marking occasions
   mark.occ <- NULL
 
-  for(i in 1:n.groups) {
-    for (j in 1:(n.occasions -1)) {
+  for (i in 1:n.groups) {
+    for (j in 1:(n.occasions - 1)) {
       add <- rep(j, each = marked[i, j])
-      mark.occ <- c(mark.occ,add)
-     }
+      mark.occ <- c(mark.occ, add)
+    }
   }
 
   #fill in CH
   for (i in 1:sum(marked))
   {
-    CH[i,mark.occ[i]]<-1
-    if (mark.occ[i]==n.occasions) next
-    for(t in (mark.occ[i]+1):n.occasions)
+    CH[i, mark.occ[i]] <- 1
+    if (mark.occ[i] == n.occasions)
+      next
+    for (t in (mark.occ[i] + 1):n.occasions)
     {
       #survive?
-      sur<-rbinom(1,1,Phi[i,t-1])
-      if(sur==0) break #move to next
+      sur <- rbinom(1, 1, Phi[i, t - 1])
+      if (sur == 0)
+        break #move to next
       #recaptured?
-      rp<-rbinom(1,1,P[i,t-1])
-      if(rp==1) CH[i,t]<-1
+      rp <- rbinom(1, 1, P[i, t - 1])
+      if (rp == 1)
+        CH[i, t] <- 1
     } #t
   } #i
   return(CH)
@@ -95,16 +110,15 @@ simul.cjs<-function(phi,p,marked, tsm = FALSE)
 #'   A vector of capture history strings with length equal to \code{nrow(x)}.
 #'
 #'@author
-#'  Who Do?
+#'  Taken from \code{program MARK: A Gentle Introduction?} http://www.phidot.org/software/mark/docs/book/
 #'
-pasty<-function(x)
+pasty <- function(x)
 {
-
-  n<-nrow(x)
-  out<-array(dim=n)
+  n <- nrow(x)
+  out <- array(dim = n)
   for (i in 1:n)
   {
-    out[i]<-paste(x[i,],collapse="")
+    out[i] <- paste(x[i, ], collapse = "")
   }
   return(out)
 }
@@ -127,12 +141,12 @@ pasty<-function(x)
 #'
 #' @details Assumes that the time between occasions is 1.
 #'
-#' @author From RMARK chapter of gentle introduction:
+#' @author From RMARK chapter of \code{program MARK: A Gentle Introduction}:
 #'  http://www.phidot.org/software/mark/docs/book/pdf/app_3.pdf
 #'
-create.td = function(ch,
-                     varname = "td",
-                     begin.time = 1)
+create.td <- function(ch,
+                      varname = "td",
+                      begin.time = 1)
 {
   # turn vector of capture history strings into a vector of characters
   char.vec = unlist(strsplit(ch, ""))
@@ -194,11 +208,27 @@ create.td = function(ch,
 #'
 #'@author Sarah Gutowsky, Dave Fifield
 #'
-augment.model.table <- function(all.models.output){
-  all.models.output$model.table$model.num <- as.numeric(row.names(all.models.output$model.table)) # the stupid output saves the model number from all.models.output as the row name, so I steal that
-  row.names(all.models.output$model.table) <- 1:nrow(all.models.output$model.table) # rename the rows in the results table to order from top-ranked to lowest ranked model, since model.table sorts by AIC
-  all.models.output$model.table$model.rank <- row.names(all.models.output$model.table) # now we can save a variable for the model rank based on the row numbers/row names
-  all.models.output$model.table$model <- gsub('~', '', all.models.output$model.table$model) # I like to change the model names from the default to remove the tildes for better printing, otherwise ugly subscripts
+augment.model.table <- function(all.models.output) {
+  # The stupid output saves the model number from all.models.output as the row
+  # name, so I steal that
+  all.models.output$model.table$model.num <-
+    as.numeric(row.names(all.models.output$model.table))
+
+  # Rename the rows in the results table to order from top-ranked to lowest
+  # ranked model, since model.table sorts by AIC
+  row.names(all.models.output$model.table) <-
+    1:nrow(all.models.output$model.table)
+
+  # Now we can save a variable for the model rank based on the row numbers/row
+  # names
+  all.models.output$model.table$model.rank <-
+    row.names(all.models.output$model.table)
+
+  # I like to change the model names from the default to remove the tildes for
+  # better printing, otherwise ugly subscripts
+  all.models.output$model.table$model <-
+    gsub('~', '', all.models.output$model.table$model)
+
   all.models.output
 }
 
@@ -226,10 +256,12 @@ augment.model.table <- function(all.models.output){
 #'
 select.model.by.rank <- function(all.models.output, rank){
 
-  print(paste0("Model Rank ", rank, ": ",
-    all.models.output$model.table$model[all.models.output$model.table$model.rank==rank]))
-  return(all.models.output[[all.models.output$model.table$model.num[all.models.output$model.table$model.rank==rank]]])
 
+  print(paste0("Model Rank ", rank, ": ",
+               all.models.output$model.table$model[all.models.output$model.table$model.rank ==
+                                                     rank]))
+  return(all.models.output[[all.models.output$model.table$model.num[all.models.output$model.table$model.rank ==
+                                                                      rank]]])
 }
 
 #' XXX replace with a more omnibus function called select_model that can select
