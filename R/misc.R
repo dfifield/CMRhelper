@@ -25,15 +25,31 @@
 #'  ANY file starting with "prefix" that ends with one of ".inp", ".out", etc.
 #'
 #'@author Dave Fifield
-force.cleanup <- function(folder = "", prefix = "mark", recursive = FALSE,
-                          test.only = FALSE) {
-  folder <- here::here(folder)
-  pat <- sprintf("^%s.*\\.inp$|^%s.*\\.res$|^%s.*\\.out$|^%s.*\\.vcv$|^%s.*\\.tmp$",
-                 prefix, prefix, prefix, prefix, prefix)
-  files <- list.files(path = folder, pattern = pat, full.names = TRUE, recursive = recursive)
+force.cleanup <-
+  function(folder = "",
+           prefix = "mark",
+           recursive = FALSE,
+           test.only = FALSE) {
+    folder <- here::here(folder)
+    pat <-
+      sprintf(
+        "^%s.*\\.inp$|^%s.*\\.res$|^%s.*\\.out$|^%s.*\\.vcv$|^%s.*\\.tmp$",
+        prefix,
+        prefix,
+        prefix,
+        prefix,
+        prefix
+      )
+    files <-
+      list.files(
+        path = folder,
+        pattern = pat,
+        full.names = TRUE,
+        recursive = recursive
+      )
 
-  if (isFALSE(test.only))
-    invisible(file.remove(files))
-  else
-    files
-}
+    if (isFALSE(test.only))
+      invisible(file.remove(files))
+    else
+      files
+  }
