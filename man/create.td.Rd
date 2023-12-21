@@ -16,8 +16,8 @@ variable name}
 }
 \value{
 Returns a dataframe with trap-dependent variables named
-    \code{varnamet+1}, ... , \code{varnamet+nocc-1} where \code{t} is
-    begin.time and \code{nocc} is the number of occasions.
+\code{varnamet+1}, ... , \code{varnamet+nocc-1} where \code{t} is
+begin.time and \code{nocc} is the number of occasions.
 }
 \description{
 Creates trap dependence covariates for a capture history
@@ -26,6 +26,6 @@ Creates trap dependence covariates for a capture history
 Assumes that the time between occasions is 1.
 }
 \author{
-From RMARK chapter of gentle introduction:
- http://www.phidot.org/software/mark/docs/book/pdf/app_3.pdf
+From \href{http://www.phidot.org/software/mark/docs/book/pdf/app_3.pdf}{RMARK} chapter of
+\href{http://www.phidot.org/software/mark/docs/book}{program MARK: A Gentle Introduction}
 }

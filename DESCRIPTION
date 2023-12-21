@@ -1,8 +1,8 @@
 Package: CMRhelper
 Type: Package
 Title: Helper Functions for Capture-Mark-Recapture Analyses
-Version: 0.5.1
-Author: Dave Fifield, Greg Robertson, Sarah Gutowsky, Anna Calvert
+Version: 0.5.2
+Author: Greg Robertson, Sarah Gutowsky, Dave Fifield, and Anna Calvert
 Maintainer: Dave Fifield <dave.fifield@ec.gc.ca>
 Description: A library of lovingly and tastefully crafted helper functions to
     assist with CMR analyses. Includes functions copied from The Gentle Introduciton
@@ -11,6 +11,7 @@ License: License? We don't need no steeenking license!
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
+Roxygen: list(markdown = TRUE)
 Imports: 
     R2ucare,
     RMark

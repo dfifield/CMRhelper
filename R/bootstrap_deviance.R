@@ -6,7 +6,7 @@
 #'    from a model.
 #'
 #'@param x (required) a MARK model object as returned by
-#'    \link[RMark]{mark}().
+#'    \code{\link[RMark]{mark}()}.
 #'
 #'@return
 #'   Returns a 2D matrix of capture histories with one row per individual and one
@@ -50,15 +50,14 @@ Marked<-function(x) {
 #'
 #'@details This function is deprecated and may go away.
 #'
-#'    The default param values (which were specific to the dipper data)
-#'    have been removed. Also fixed a bug where "groups" was referred to as
-#'    "Groups" in the function.
 #'@return
 #'   Returns a 2D matrix of capture histories with one row per individual and one
 #'   column per occasion.
 #'
 #'@author need to find source
-
+#    The default param values (which were specific to the dipper data)
+#    have been removed. Also fixed a bug where "groups" was referred to as
+#    "Groups" in the function.
 Marked.3 <- function(data, n.occasions, groups)
 {
   group<-data[,2]
@@ -80,14 +79,15 @@ Marked.3 <- function(data, n.occasions, groups)
 
 
 #'
-#'@title Extract values from a mark object needed to simulate capture histories
+#'@title Extract values from a Mark object
 #'
-#'@description This function takes a fitted CJS mark model, and extracts relevant details
-#'  (numbers marked and recaptured in each group(s) and estimated \phi and *p* values).
+#'@description This function takes a fitted CJS Mark model, and extracts relevant details
+#'  (numbers marked and recaptured in each group(s) and estimated \eqn{\phi} and *p* values)
+#'   needed to simulate capture histories.
 #'
 #'
 #'@param x (required) a MARK model object as returned by
-#'    \link[RMark]{mark}().
+#'    \code{\link[RMark]{mark}()}.
 #'
 #'@details
 #'  This function is designed for relatively straight forward models, although it
@@ -97,7 +97,7 @@ Marked.3 <- function(data, n.occasions, groups)
 #'
 #'@return
 #'  A list with needed values to simulate a capture history. Generally sent to
-#'  \link[CMRhelper]{simul.boot}() as the next step.
+#'  \code{\link[CMRhelper]{simul.boot}()} as the next step.
 #'
 #'
 #'@author
@@ -211,7 +211,7 @@ extract.model <- function(x) {
 #'
 #'@description Simulates a new capture history with the same structure and rates.
 #'
-#'@param extract (required) a list as returned from \link[CMRhelper]{extract.model}.
+#'@param extract (required) a list as returned from \code{\link[CMRhelper]{extract.model}()}.
 #'
 #'@details
 #'  This function is designed for relatively straight forward models, although it
@@ -221,13 +221,13 @@ extract.model <- function(x) {
 #'
 #'@return
 #'  A simulated capture history formatted as a data.frame ready for analysis with
-#'  usual RMARK functions. Generally sent to \link[RMark]{process.data}() as the
+#'  usual RMARK functions. Generally sent to \code{\link[RMark]{process.data}()} as the
 #'  next step.
 #'
 #'
 #'@author
 #'  Simulation piece largely taken from Kéry and Shaub's (2012) simul.cjs function
-#'  (see \code{simul.cjs}) -
+#'  (see \code{\link[CMRhelper]{simul.cjs}()}) -
 #'  further modified by Sarah Gutowsky and Greg Robertson.
 #'
 simul.boot <- function(extract) {
@@ -264,7 +264,7 @@ simul.boot <- function(extract) {
 #'@description Use RMark to setup and run multiple analyses
 #'
 #'@param x (required) a MARK model object as returned by
-#'    \link[RMark]{mark}().
+#'    \code{\link[RMark]{mark}()}.
 #'
 #'@param reps (required) number of repetitions
 #'
@@ -272,13 +272,12 @@ simul.boot <- function(extract) {
 #'  marking effect in the Mark models fit to the simulated capture histories.
 #'
 #'@details
-#'  Uses \link[CMRhelper]{simul.boot} to generate simulated capture histories
+#'  Uses \code{\link[CMRhelper]{simul.boot}()} to generate simulated capture histories
 #'  from a fitted model. Then uses \code{RMark} to fit models to these simulated
 #'  histories.
 #'
 #'@return
-#'
-#'  A list containing mean deviance along with 95% confidence limits.
+#'  A list containing mean deviance along with 95\% confidence limits.
 #'
 #'@author
 #'  Sarah Gutowksy, with further options by Greg Robertson
@@ -358,13 +357,13 @@ sims <- function(x, reps, tsm = FALSE)
 #'
 #'@export
 #'
-#'@title Calculate a bootstrapped c-hat from a fitted CJS mark model
+#'@title Calculate a bootstrapped c-hat from a fitted CJS Mark model
 #'
 #'@description This function takes a fitted mark model and computes bootstrapped
 #'    mean (and 95% CI) c-hat.
 #'
 #'@param x (required) a MARK model object as returned by
-#'    \link[RMark]{mark}().
+#'    \code{\link[RMark]{mark}()}.
 #'
 #'@param reps (required) number of repetitions
 #'
@@ -372,20 +371,18 @@ sims <- function(x, reps, tsm = FALSE)
 #'  marking effect in the Mark models fit to the simulated capture histories.
 #'
 #'@details
-#'    Makes use of \link[CMRhelper]{sims}() to simulate and
-#'    analyse a set capture history based on the model. This process is
+#'    Makes use of \code{\link[CMRhelper]{sims}()} to simulate and
+#'    analyse a set capture histories based on the model. This process is
 #'    repeated \code{reps} times and a bootstrapped c-hat value is calculated.
 #'
 #'@return
-#'    Returns a matrix with 3 columns: bootstrapped c.hat, upper (97.5%), and lower(2.5%)
+#'    Returns a 1x3 matrix with columns for: bootstrapped c.hat, upper (97.5%), and lower(2.5%)
 #'    confidence limits.
 #'
 #'@author
 #'  Sarah Gutowsky, Greg Robertson
 #'
 bootstrap.deviance <- function(x, reps, tsm = FALSE) {
-
-
   sim.out <- sims(x, reps, tsm)
   data.deviance <- x$results$lnl
   sim.ci <- c(sim.out$deviance.025, sim.out$deviance.975)

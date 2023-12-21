@@ -7,7 +7,7 @@
 #'    folder.
 #'
 #' @param folder (optional, character vector or length 1) folder to delete files from.
-#'    If absent, defaults to the project root as determined by \link[here]{here}.
+#'    If absent, defaults to the project root as determined by \code{\link[here]{here}()}.
 #'    If specified, folder is relative to project root. Note this function
 #'    doesn't require the "here" package to be loaded, but rather just installed.
 #'
@@ -21,7 +21,7 @@
 #'  character vector of file names to be deleted without removing them.
 #'
 #'@details
-#'   NOTE this is a little more liberal than RMark::cleanup() since it will match
+#'   NOTE this is a little more liberal than \code{\link[RMark]{cleanup}()} in \pkg{RMark} since it will match
 #'  ANY file starting with "prefix" that ends with one of ".inp", ".out", etc.
 #'
 #'@author Dave Fifield

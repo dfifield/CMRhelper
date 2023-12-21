@@ -15,8 +15,9 @@ A vector of capture history strings with length equal to \code{nrow(x)}.
 }
 \description{
 Converts the input capture history matrix into a vector of
-   capture history strings.
+capture history strings.
 }
 \author{
-Who Do?
+From \href{http://www.phidot.org/software/mark/docs/book/pdf/app_3.pdf}{RMARK} chapter of
+\href{http://www.phidot.org/software/mark/docs/book}{program MARK: A Gentle Introduction}
 }

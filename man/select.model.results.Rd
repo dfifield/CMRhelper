@@ -8,15 +8,15 @@ select.model.results(model_num)
 }
 \arguments{
 \item{model_num}{(required) an integer indicating the model row number in the
-dataframe returned by \link[RMark]{create.model.list()}}
+dataframe returned by \code{\link[RMark]{create.model.list}()}}
 }
 \value{
 a list of model output of the correspondingly numbered model
 }
 \description{
-Select a model from a \code{marklist} as returned by
-  \link[RMark]{mark.wrapper()} based on the model number in the model list
-  returned by \link[RMark]{create.model.list()}
+Select a model from a \code{"marklist"} class object as returned by
+\code{\link[RMark]{mark.wrapper}()} based on the model number in the model list
+returned by \code{\link[RMark]{create.model.list}()}
 }
 \details{
 XXX replace with a more omnibus function called select_model that can select
@@ -27,9 +27,9 @@ models whose weight is > x, or all models within x AIC units of the top model
 (or even any arbitray model?)
 
 Select a model from a \code{marklist} as returned by
-  \link[RMark]{mark.wrapper()} based on the model number in the model list
-  returned by \link[RMark]{create.model.list()}, must use syntax:
-  \code{all.models=mark.wrapper(model.list,data=data.processed,ddl=data.ddl,threads=2}.
+\code{\link[RMark]{mark.wrapper}()} based on the model number in the model list
+returned by \code{\link[RMark]{create.model.list}()}, must use syntax:
+\code{all.models=mark.wrapper(model.list,data=data.processed,ddl=data.ddl,threads=2}.
 }
 \author{
 Greg Robertson and Sarah Gutowsky

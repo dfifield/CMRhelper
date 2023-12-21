@@ -23,14 +23,16 @@ time since marking effect should be included.}
 }
 \value{
 Returns a 2D matrix of capture histories with one row per individual and one
-  column per occasion.
+column per occasion.
 }
 \description{
 This function simulates capture histories based on known phi and p.
 }
 \details{
-Any pertinent details....
+The code was modifield from the function of the same name presented in
+Kéry & Schaub(2012), p.178, with the addition of the tsm argument.
 }
 \author{
-From IPM book p 178.....Schaub & Kery
+Modified from Kéry & Schaub, 2012. Bayesian Population Analysis, p. 178.
+Original code available here: \url{https://www.vogelwarte.ch/modx/de/projekte/publikationen/bpa/complete-code-and-data-files-of-the-book}
 }

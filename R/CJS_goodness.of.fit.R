@@ -2,12 +2,12 @@
 #'
 #'@title Goodness of fit testing of CMR data for a CJS model
 #'
-#'@description Run goodness of fit tests from R2ucare on CJS process data
+#'@description Run goodness of fit tests from R2ucare on CJS processed data
 #'
-#'@param data.processed (required) a list dataframe with several variables
+#'@param data.processed (required) a list with several variables
 #'  (e.g., number of capture occasions, time intervals) returned by
-#'  \link[RMark]{process.data} based on live-only capture histories and
-#'  model="CJS".
+#'  \code{\link[RMark]{process.data}()} based on live-only capture histories and
+#'  model = "CJS".
 #'
 #'@param verbose (optional, default = FALSE) if TRUE, prints test details
 #'
@@ -22,10 +22,12 @@
 
 #'@author Sarah Gutowsky
 
-CJS.GOF.testing <- function(data.processed,verbose=FALSE)
+CJS.GOF.testing <- function(data.processed, verbose = FALSE)
 {
   # export capture history from the data.processed dataframe as .inp file and
   # import again to use with R2ucare
+  # TODO: should really use a tempfile here so as not to clutter up the
+  # working directory.
   RMark::export.chdata(data.processed, filename = "CH.for.GOF" , replace =
                          TRUE)
   data.inp = R2ucare::read_inp("CH.for.GOF.inp")

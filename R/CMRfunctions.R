@@ -20,8 +20,8 @@
 #'    time since marking effect should be included.
 #'
 #'@details
-#'  Same as code for the book see \code(Author) below, with the addition of
-#'  the tsm argument.
+#'  The code was modifield from the function of the same name presented in
+#'  Kéry & Schaub(2012), p.178, with the addition of the tsm argument.
 #'
 #'@return
 #'   Returns a 2D matrix of capture histories with one row per individual and one
@@ -29,7 +29,7 @@
 #'
 #'@author
 #'  Modified from Kéry & Schaub, 2012. Bayesian Population Analysis, p. 178.
-#'  Original code available here: \code{https://www.vogelwarte.ch/modx/de/projekte/publikationen/bpa/complete-code-and-data-files-of-the-book}
+#'  Original code available here: \url{https://www.vogelwarte.ch/modx/de/projekte/publikationen/bpa/complete-code-and-data-files-of-the-book}
 #'
 simul.cjs <- function(phi, p, marked, tsm = FALSE)
 {
@@ -109,8 +109,8 @@ simul.cjs <- function(phi, p, marked, tsm = FALSE)
 #'@return
 #'   A vector of capture history strings with length equal to \code{nrow(x)}.
 #'
-#'@author
-#'  Taken from \code{program MARK: A Gentle Introduction?} http://www.phidot.org/software/mark/docs/book/
+#' @author From \href{http://www.phidot.org/software/mark/docs/book/pdf/app_3.pdf}{RMARK} chapter of
+#' \href{http://www.phidot.org/software/mark/docs/book}{program MARK: A Gentle Introduction}
 #'
 pasty <- function(x)
 {
@@ -141,8 +141,8 @@ pasty <- function(x)
 #'
 #' @details Assumes that the time between occasions is 1.
 #'
-#' @author From RMARK chapter of \code{program MARK: A Gentle Introduction}:
-#'  http://www.phidot.org/software/mark/docs/book/pdf/app_3.pdf
+#' @author From \href{http://www.phidot.org/software/mark/docs/book/pdf/app_3.pdf}{RMARK} chapter of
+#' \href{http://www.phidot.org/software/mark/docs/book}{program MARK: A Gentle Introduction}
 #'
 create.td <- function(ch,
                       varname = "td",
@@ -175,15 +175,15 @@ create.td <- function(ch,
 #'
 #'@description Adds numeric model rankings based on AICc, and model numbers to
 #'  the \code{model.table} element in the list returned by
-#'  \link[RMark]{mark.wrapper}, as well as removing ~ from model names. Model
+#'  \code{\link[RMark]{mark.wrapper}()}, as well as removing ~ from model names. Model
 #'  numbers correspond to the order of model output elements in the list before
 #'  \code{model.table}.
 #'
 #'@param all.models.output (required, list) the list with all model outputs and the
-#'  \code{model.table} element returned by \link[RMark]{mark.wrapper}().
+#'  \code{model.table} element returned by \code{\link[RMark]{mark.wrapper}()}.
 #'
 #'@details The \code{model.table} element of the list returned by
-#'  \link[RMark]{mark.wrapper()} has one row per model ordered by AICc rank with
+#'  \code{\link[RMark]{mark.wrapper}()} has one row per model ordered by AICc rank with
 #'  internal \code{mark} model number encoded as the row-number of the
 #'  dataframe.
 #'
@@ -236,20 +236,20 @@ augment.model.table <- function(all.models.output) {
 #'
 #' @title Select CMR model by rank
 #'
-#' @description Extract model output from list of models based on model AIC rank
+#' @description Extract model output from list of models based on AIC rank
 #'
 #' @param all.models.output (required, list) the list with all model outputs and
-#'   the \code{model.table} element returned by \link[RMark]{mark.wrapper} and
-#'   augmented with \link[CMRhelper]{augment.model.table}
+#'   the \code{model.table} element returned by \code{\link[RMark]{mark.wrapper}()} and
+#'   augmented with \code{\link[CMRhelper]{augment.model.table}()}
 #'
 #' @param rank (required, integer) a number indicating the desired model rank
 #'
 #' @details This function selects a model from a list of model outputs returned
-#'   by \link[RMark]{mark.wrapper} based on the model AIC rank. Model AIC rank
-#'   is determined by \link[CMRhelper]{augment.model.table}, thus the user must
+#'   by \code{\link[RMark]{mark.wrapper}()} based on the model AIC rank. Model AIC rank
+#'   is determined by \code{\link[CMRhelper]{augment.model.table}()}, thus the user must
 #'   augment the model table first before using this function.
 #'
-#' @return a list of model output of the correspondingly ranked model
+#' @return A list of model output of the correspondingly ranked model.
 #'
 #' @author Sarah Gutowsky
 #'
@@ -275,16 +275,16 @@ select.model.by.rank <- function(all.models.output, rank){
 #'
 #' @title Select CMR model by model number
 #'
-#' @description Select a model from a \code{marklist} as returned by
-#'   \link[RMark]{mark.wrapper()} based on the model number in the model list
-#'   returned by \link[RMark]{create.model.list()}
+#' @description Select a model from a \code{"marklist"} class object as returned by
+#'   \code{\link[RMark]{mark.wrapper}()} based on the model number in the model list
+#'   returned by \code{\link[RMark]{create.model.list}()}
 #'
 #' @param model_num (required) an integer indicating the model row number in the
-#'   dataframe returned by \link[RMark]{create.model.list()}
+#'   dataframe returned by \code{\link[RMark]{create.model.list}()}
 #'
 #' @details Select a model from a \code{marklist} as returned by
-#'   \link[RMark]{mark.wrapper()} based on the model number in the model list
-#'   returned by \link[RMark]{create.model.list()}, must use syntax:
+#'   \code{\link[RMark]{mark.wrapper}()} based on the model number in the model list
+#'   returned by \code{\link[RMark]{create.model.list}()}, must use syntax:
 #'   \code{all.models=mark.wrapper(model.list,data=data.processed,ddl=data.ddl,threads=2}.
 #'
 #' @return a list of model output of the correspondingly numbered model

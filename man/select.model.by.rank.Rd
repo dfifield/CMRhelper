@@ -8,22 +8,22 @@ select.model.by.rank(all.models.output, rank)
 }
 \arguments{
 \item{all.models.output}{(required, list) the list with all model outputs and
-the \code{model.table} element returned by \link[RMark]{mark.wrapper} and
-augmented with \link[CMRhelper]{augment.model.table}}
+the \code{model.table} element returned by \code{\link[RMark]{mark.wrapper}()} and
+augmented with \code{\link[CMRhelper]{augment.model.table}()}}
 
 \item{rank}{(required, integer) a number indicating the desired model rank}
 }
 \value{
-a list of model output of the correspondingly ranked model
+A list of model output of the correspondingly ranked model.
 }
 \description{
-Extract model output from list of models based on model AIC rank
+Extract model output from list of models based on AIC rank
 }
 \details{
 This function selects a model from a list of model outputs returned
-  by \link[RMark]{mark.wrapper} based on the model AIC rank. Model AIC rank
-  is determined by \link[CMRhelper]{augment.model.table}, thus the user must
-  augment the model table first before using this function.
+by \code{\link[RMark]{mark.wrapper}()} based on the model AIC rank. Model AIC rank
+is determined by \code{\link[CMRhelper]{augment.model.table}()}, thus the user must
+augment the model table first before using this function.
 }
 \author{
 Sarah Gutowsky
