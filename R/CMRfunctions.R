@@ -29,7 +29,8 @@
 #'
 #'@author
 #'  Modified from Kéry & Schaub, 2012. Bayesian Population Analysis, p. 178.
-#'  Original code available here: \url{https://www.vogelwarte.ch/modx/de/projekte/publikationen/bpa/complete-code-and-data-files-of-the-book}
+#'  Original code available here:
+#'  \url{https://www.vogelwarte.ch/modx/assets/files/publications/BPA/Web%20appendix%201.txt}
 #'
 simul.cjs <- function(phi, p, marked, tsm = FALSE)
 {
@@ -109,18 +110,16 @@ simul.cjs <- function(phi, p, marked, tsm = FALSE)
 #'@return
 #'   A vector of capture history strings with length equal to \code{nrow(x)}.
 #'
-#' @author From \href{http://www.phidot.org/software/mark/docs/book/pdf/app_3.pdf}{RMARK} chapter of
+#' @author Dave Fifield based on function of same name in
 #' \href{http://www.phidot.org/software/mark/docs/book}{program MARK: A Gentle Introduction}
 #'
 pasty <- function(x)
 {
-  n <- nrow(x)
-  out <- array(dim = n)
-  for (i in 1:n)
-  {
-    out[i] <- paste(x[i, ], collapse = "")
-  }
-  return(out)
+  x %>%
+    as.data.frame %>%
+    split(1:nrow(.)) %>%
+    purrr::map_chr(~paste(., collapse = "")) %>%
+    unname()
 }
 
 #'@export
