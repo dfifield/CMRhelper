@@ -19,7 +19,6 @@
 #'
 #'@return Returns a dataframe with goodness of fit testing results from overall
 #'  CJS, and tests 2CT, 3SR, 3SM, 2CL
-
 #'@author Sarah Gutowsky
 
 CJS.GOF.testing <- function(data.processed, verbose = FALSE)

@@ -18,6 +18,6 @@ Converts the input capture history matrix into a vector of
 capture history strings.
 }
 \author{
-From \href{http://www.phidot.org/software/mark/docs/book/pdf/app_3.pdf}{RMARK} chapter of
-\href{http://www.phidot.org/software/mark/docs/book}{program MARK: A Gentle Introduction}
+Dave Fifield based on function of same name originally available at
+\url{https://sites.google.com/site/wild8390/software/simulate}
 }

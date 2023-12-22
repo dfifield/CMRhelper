@@ -1,6 +1,4 @@
-#'
 #'@export
-#'
 #'@title Simulate CJS data for 1 group at a time
 #'
 #'@description This function simulates capture histories based on known phi and p.
@@ -110,9 +108,8 @@ simul.cjs <- function(phi, p, marked, tsm = FALSE)
 #'@return
 #'   A vector of capture history strings with length equal to \code{nrow(x)}.
 #'
-#' @author Dave Fifield based on function of same name in
-#' \href{http://www.phidot.org/software/mark/docs/book}{program MARK: A Gentle Introduction}
-#'
+#'@author Dave Fifield based on function of same name originally available at
+#'  \url{https://sites.google.com/site/wild8390/software/simulate}
 pasty <- function(x)
 {
   x %>%

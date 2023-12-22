@@ -13,26 +13,26 @@
 #'   column per occasion.
 #'
 #'@author modified from XXXX by Greg Robertson
+Marked <- function(x) {
+  n.groups <-
+    ifelse(is.null(x$data$group.covariates),
+           1,
+           nlevels(x$data$data$group))
 
-Marked<-function(x) {
+  marked <- matrix(nrow = n.groups, ncol = x$data$nocc - 1)
 
-  n.groups <- ifelse(is.null(x$data$group.covariates), 1, nlevels(x$data$data$group))
-
-  marked<-matrix(nrow=n.groups,ncol=x$data$nocc-1)
-
-  for(g in 1:n.groups)
+  for (g in 1:n.groups)
   {
-
-    if(n.groups == 1){
+    if (n.groups == 1) {
       ch <- x$data$data$ch
     } else {
       ch <- x$data$data$ch[x$data$data$group == g]
     }
 
-    for(i in 1:x$data$nocc-1)
+    for (i in 1:x$data$nocc - 1)
     {
-      ch1<-ch[(as.numeric(substr(ch,1,i)))==1]
-      marked[g,i]<-length(ch1)
+      ch1 <- ch[(as.numeric(substr(ch, 1, i))) == 1]
+      marked[g, i] <- length(ch1)
     }
   }
   return(marked)
@@ -60,23 +60,21 @@ Marked<-function(x) {
 #    "Groups" in the function.
 Marked.3 <- function(data, n.occasions, groups)
 {
-  group<-data[,2]
-  marked<-matrix(nrow=length(groups),ncol=n.occasions)
-  for(g in 1:length(groups))
+  group <- data[, 2]
+  marked <- matrix(nrow = length(groups), ncol = n.occasions)
+  for (g in 1:length(groups))
   {
-    data_<-subset(data,group==groups[g])
+    data_ <- subset(data, group == groups[g])
     data_
-    ch<-data_$ch
-    for(i in 1:n.occasions)
+    ch <- data_$ch
+    for (i in 1:n.occasions)
     {
-      ch1<-ch[(as.numeric(substr(ch,1,i)))==1]
-      marked[g,i]<-length(ch1)
+      ch1 <- ch[(as.numeric(substr(ch, 1, i))) == 1]
+      marked[g, i] <- length(ch1)
     }
   }
   return(marked)
 }
-
-
 
 #'
 #'@title Extract values from a Mark object
@@ -176,9 +174,9 @@ extract.model <- function(x) {
 
   }
 
-  Phi <- phi[rep(1:nrow(phi), times = as.vector(t(marked))),]
+  Phi <- phi[rep(1:nrow(phi), times = as.vector(t(marked))), ]
 
-  P <- p[rep(1:nrow(p), times = as.vector(t(marked))),]
+  P <- p[rep(1:nrow(p), times = as.vector(t(marked))), ]
 
   CH <- matrix(0, ncol = n.occasions, nrow = sum(marked))
 
@@ -293,7 +291,8 @@ sims <- function(x, reps, tsm = FALSE)
     cat("iteration = ", i, "\n")
 
     if (x$number.of.groups == 1) {
-      sim.processed <- RMark::process.data(simul.boot(extract.list), model = "CJS")
+      sim.processed <-
+        RMark::process.data(simul.boot(extract.list), model = "CJS")
       sim.ddl = RMark::make.design.data(sim.processed)
       global.sim <- RMark::mark(
         sim.processed,
@@ -307,7 +306,9 @@ sims <- function(x, reps, tsm = FALSE)
       )
     } else {
       sim.processed <-
-        RMark::process.data(simul.boot(extract.list), model = "CJS", groups = "group")
+        RMark::process.data(simul.boot(extract.list),
+                            model = "CJS",
+                            groups = "group")
       sim.ddl = RMark::make.design.data(sim.processed)
       if (tsm == TRUE) {
         sim.ddl <- RMark::add.design.data(
@@ -386,9 +387,14 @@ bootstrap.deviance <- function(x, reps, tsm = FALSE) {
   sim.out <- sims(x, reps, tsm)
   data.deviance <- x$results$lnl
   sim.ci <- c(sim.out$deviance.025, sim.out$deviance.975)
-  cat("data deviance = ", data.deviance,
-    ", simulation mean = ", sim.out$deviance.mean,
-    ", simulation 95%CI = ", sim.ci,"\n"
+  cat(
+    "data deviance = ",
+    data.deviance,
+    ", simulation mean = ",
+    sim.out$deviance.mean,
+    ", simulation 95%CI = ",
+    sim.ci,
+    "\n"
   )
 
   #modified c.hat

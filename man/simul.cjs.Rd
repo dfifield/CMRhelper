@@ -34,5 +34,6 @@ Kéry & Schaub(2012), p.178, with the addition of the tsm argument.
 }
 \author{
 Modified from Kéry & Schaub, 2012. Bayesian Population Analysis, p. 178.
-Original code available here: \url{https://www.vogelwarte.ch/modx/de/projekte/publikationen/bpa/complete-code-and-data-files-of-the-book}
+Original code available here:
+\url{https://www.vogelwarte.ch/modx/assets/files/publications/BPA/Web\%20appendix\%201.txt}
 }
