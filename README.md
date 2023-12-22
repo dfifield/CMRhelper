@@ -11,5 +11,4 @@ Installation
 Citation
 =======
 
-Robertson GJ, Gutowsky SE, Fifield DA, Calvert AM (2023). CMRhelper: Helper Functions
-  for Capture-Mark-Recapture Analyses. R package version 0.5.3. https://github.com/dfifield/CMRhelper
+Robertson, G. J., Gutowsky, S. E., Fifield, D. A., & Calvert, A. M. (2023). CMRhelper: R package of utility functions for Capture-Mark-Recapture analyses (Version 0.5.3) [Computer software]. https://github.com/dfifield/CMRhelper
