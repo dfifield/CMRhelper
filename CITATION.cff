@@ -1,19 +1,31 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
 cff-version: 1.2.0
-message: "If you use this software, please cite it as below."
+title: >-
+  CMRhelper: R package of utility functions for
+  Capture-Mark-Recapture analyses
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
 authors:
-  - family-names: "Robertson"
-  given-names: "Gregory J"
-  orcid: "https://orcid.org/0000-0000-0000-0000"
-  - family-names: "Gutowsky"
-  given-names: "Sarah E"
-  orcid: "https://orcid.org/0000-0000-0000-0000"
-  - family-names: "Fifield"
-  given-names: "David A"
-  orcid: "https://orcid.org/0000-0000-0000-0000"
-  - family-names: "Calvert"
-  given-names: "Anna M"
-  orcid: "https://orcid.org/0000-0000-0000-0000"
-title: "CMRhelper: R package of utility functions for Capture-Mark-Recapture analyses"
+  - given-names: Gregory J
+    family-names: Robertson
+    email: greg.robertson@ec.gc.ca
+  - given-names: Sarah E
+    family-names: Gutowsky
+    email: sarahegutowsky@gmail.com
+  - given-names: David A
+    family-names: Fifield
+    email: dave.fifield@ec.gc.ca
+  - given-names: Anna M
+    family-names: Calvert
+    email: anna.calvert@ec.gc.ca
+identifiers:
+  - type: url
+    value: 'https://github.com/dfifield/CMRhelper'
+repository-code: 'https://github.com/dfifield/CMRhelper'
+license: MIT
 version: 0.5.3
-date-released: 2022-12-21
-url: "https://github.com/dfifield/CMRhelper"
+date-released: '2023-12-22'
