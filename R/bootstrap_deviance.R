@@ -1,6 +1,6 @@
 #'@export
 #'
-#'@title Extract marked individuals
+#'@title Extract number of marked individuals
 #'
 #'@description Extracts numbers first marked at each occasion and in each group
 #'    from a model.
@@ -9,34 +9,57 @@
 #'    \code{\link[RMark]{mark}()}.
 #'
 #'@return
-#'   Returns a 2D matrix of capture histories with one row per individual and one
-#'   column per occasion.
+#'   Returns a 2D matrix of numbers first marked in each group (row) by occasion
+#'   (column).
 #'
-#'@author modified from XXXX by Greg Robertson
-Marked <- function(x) {
+#'@author Greg Robertson
+
+# Marked <- function(x) {
+#   n.groups <-
+#     ifelse(is.null(x$data$group.covariates),
+#            1,
+#            nlevels(x$data$data$group))
+#
+#   marked <- matrix(nrow = n.groups, ncol = x$data$nocc - 1)
+#
+#   for (g in 1:n.groups)
+#   {
+#     if (n.groups == 1) {
+#       ch <- x$data$data$ch
+#     } else {
+#       ch <- x$data$data$ch[x$data$data$group == g]
+#     }
+#
+#     for (i in 1:x$data$nocc - 1)
+#     {
+#       ch1 <- ch[(as.numeric(substr(ch, 1, i))) == 1]
+#       marked[g, i] <- length(ch1)
+#     }
+#   }
+#   return(marked)
+# }
+
+extract.n.marked <- function(x) {
   n.groups <-
     ifelse(is.null(x$data$group.covariates),
            1,
            nlevels(x$data$data$group))
 
-  marked <- matrix(nrow = n.groups, ncol = x$data$nocc - 1)
 
-  for (g in 1:n.groups)
-  {
-    if (n.groups == 1) {
-      ch <- x$data$data$ch
-    } else {
-      ch <- x$data$data$ch[x$data$data$group == g]
-    }
+  if (n.groups == 1){
 
-    for (i in 1:x$data$nocc - 1)
-    {
-      ch1 <- ch[(as.numeric(substr(ch, 1, i))) == 1]
-      marked[g, i] <- length(ch1)
-    }
+        marked <- t(table(regexpr('1', x$data$data$ch)))
+
+        } else {
+
+        marked <- t(sapply(1:n.groups, function (g)
+              table(regexpr('1', x$data$data$ch[x$data$data$group == g]))))
   }
+
   return(marked)
 }
+
+
 
 #'@title Extract marked individuals - old way
 #'
@@ -104,7 +127,7 @@ Marked.3 <- function(data, n.occasions, groups)
 extract.model <- function(x) {
   n.occasions <- x$nocc
   n.groups <- x$number.of.groups
-  marked <- Marked(x)
+  marked <- extract.n.marked(x)
 
   phi <- matrix(as.vector(t(t(
     sapply(1:n.groups, function (g) {
