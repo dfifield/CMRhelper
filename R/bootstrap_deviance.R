@@ -13,32 +13,6 @@
 #'   (column).
 #'
 #'@author Greg Robertson
-
-# Marked <- function(x) {
-#   n.groups <-
-#     ifelse(is.null(x$data$group.covariates),
-#            1,
-#            nlevels(x$data$data$group))
-#
-#   marked <- matrix(nrow = n.groups, ncol = x$data$nocc - 1)
-#
-#   for (g in 1:n.groups)
-#   {
-#     if (n.groups == 1) {
-#       ch <- x$data$data$ch
-#     } else {
-#       ch <- x$data$data$ch[x$data$data$group == g]
-#     }
-#
-#     for (i in 1:x$data$nocc - 1)
-#     {
-#       ch1 <- ch[(as.numeric(substr(ch, 1, i))) == 1]
-#       marked[g, i] <- length(ch1)
-#     }
-#   }
-#   return(marked)
-# }
-
 extract.n.marked <- function(x) {
   n.groups <-
     ifelse(is.null(x$data$group.covariates),
@@ -46,56 +20,13 @@ extract.n.marked <- function(x) {
            nlevels(x$data$data$group))
 
 
-  if (n.groups == 1){
-
-        marked <- t(table(regexpr('1', x$data$data$ch)))
-
-        } else {
-
-        marked <- t(sapply(1:n.groups, function (g)
-              table(regexpr('1', x$data$data$ch[x$data$data$group == g]))))
+  if (n.groups == 1) {
+    marked <- t(table(regexpr('1', x$data$data$ch)))
+  } else {
+    marked <- t(sapply(1:n.groups, function (g)
+      table(regexpr( '1', x$data$data$ch[x$data$data$group == g]))))
   }
 
-  return(marked)
-}
-
-
-
-#'@title Extract marked individuals - old way
-#'
-#'@description Extracts numbers first marked at each occasion and in each group.
-#'
-#'@param data (required) the data.
-#'
-#'@param n.occasions (required) number of occasions.
-#'
-#'@param groups (required) a vector of group labels.
-#'
-#'@details This function is deprecated and may go away.
-#'
-#'@return
-#'   Returns a 2D matrix of capture histories with one row per individual and one
-#'   column per occasion.
-#'
-#'@author need to find source
-#    The default param values (which were specific to the dipper data)
-#    have been removed. Also fixed a bug where "groups" was referred to as
-#    "Groups" in the function.
-Marked.3 <- function(data, n.occasions, groups)
-{
-  group <- data[, 2]
-  marked <- matrix(nrow = length(groups), ncol = n.occasions)
-  for (g in 1:length(groups))
-  {
-    data_ <- subset(data, group == groups[g])
-    data_
-    ch <- data_$ch
-    for (i in 1:n.occasions)
-    {
-      ch1 <- ch[(as.numeric(substr(ch, 1, i))) == 1]
-      marked[g, i] <- length(ch1)
-    }
-  }
   return(marked)
 }
 
