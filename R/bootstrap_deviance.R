@@ -21,10 +21,15 @@ extract.n.marked <- function(x) {
 
 
   if (n.groups == 1) {
-    marked <- t(table(regexpr('1', x$data$data$ch)))
+    marked <- rep(0, x$nocc)
+    marked[as.numeric(dimnames(table(regexpr('1', x$data$data$ch)))[[1]])] <- t(table(regexpr('1', x$data$data$ch)))
+    marked <- t(marked[-x$nocc])
   } else {
-    marked <- t(sapply(1:n.groups, function (g)
-      table(regexpr( '1', x$data$data$ch[x$data$data$group == g]))))
+      marked <- matrix(0, nrow = n.groups, ncol = x$nocc)
+      for(g in 1:n.groups){
+        marked[g,as.numeric(dimnames(table(regexpr('1', x$data$data$ch[x$data$data$group == g])))[[1]])] <- t(table(regexpr('1', x$data$data$ch[x$data$data$group == g])))
+      }
+      marked <- marked[,-x$nocc]
   }
 
   return(marked)

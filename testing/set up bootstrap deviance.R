@@ -25,12 +25,15 @@ p <- matrix(c(rep(0.5, n.occs - 1),
               rep(0.6, n.occs - 1)),
             nrow = n.groups, byrow = TRUE)
 
+# something with no releases in one year
+# marked[,5] <- 0
+
+# single group
 # marked <- matrix(rep(50, n.occs - 1), nrow = n.groups, byrow = TRUE)
+# something with no releases in one year
+# marked <- matrix(c(rep(50, 4), 0, rep(50,4)), nrow = n.groups, byrow = TRUE)
 # phi <- matrix(rep(0.8, n.occs - 1), nrow = n.groups, byrow = TRUE)
 # p <- matrix(rep(0.8, n.occs - 1), nrow = n.groups, byrow = TRUE)
-
-
-
 
 ## this chunk for a model with group
 mydata <- data.frame(ch = pasty(simul.cjs(phi,p,marked)), group = rep(1:n.groups, times = rowSums(marked)))
