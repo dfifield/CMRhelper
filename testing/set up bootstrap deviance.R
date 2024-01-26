@@ -1,6 +1,8 @@
 library(RMark)
 library(magrittr)
 
+
+
 # Sat Mar 19 09:49:53 2022 ------------------------------
 
 # attempt to set up a general bootstrapping procedure based solely on an existing model
@@ -16,14 +18,25 @@ marked <- matrix(c(rep(50, n.occs - 1),
                    rep(40, n.occs - 1),
                    rep(45, n.occs - 1)),
                  nrow = n.groups, byrow = TRUE)
-phi <- matrix(c(rep(0.65, n.occs - 1),
-                rep(0.6, n.occs - 1),
-                rep(0.8, n.occs - 1)),
-              nrow = n.groups, byrow = TRUE)
-p <- matrix(c(rep(0.5, n.occs - 1),
-              rep(0.4, n.occs - 1),
-              rep(0.6, n.occs - 1)),
-            nrow = n.groups, byrow = TRUE)
+phi <- matrix(c(rep(0.9, (n.occs - 1) ^ 2),
+                rep(0.9,  (n.occs - 1) ^ 2),
+                rep(0.2,  (n.occs - 1) ^ 2)),
+              nrow = n.groups * (n.occs -1), ncol = n.occs -1, byrow = TRUE)
+p <- matrix(c(rep(0.9, (n.occs - 1) ^ 2),
+              rep(0.2,  (n.occs - 1) ^ 2),
+              rep(0.2,  (n.occs - 1) ^ 2)),
+            nrow = n.groups * (n.occs -1), ncol = n.occs -1, byrow = TRUE)
+
+for(i in 1:n.groups){
+    diag(phi[(1:(n.occs-1)) + ((i-1) * (n.occs - 1)),1:(n.occs-1)]) <- diag(phi[(1:(n.occs-1)) + ((i-1) * (n.occs - 1)),1:(n.occs-1)]) / 2
+}
+
+phi
+
+Phi <- phi[rep(1:nrow(phi), times = as.vector(t(marked))), ]
+
+P <- p[rep(1:nrow(p), times = as.vector(t(marked))), ]
+
 
 # something with no releases in one year
 # marked[,5] <- 0
@@ -37,6 +50,8 @@ p <- matrix(c(rep(0.5, n.occs - 1),
 
 ## this chunk for a model with group
 mydata <- data.frame(ch = pasty(simul.cjs(phi,p,marked)), group = rep(1:n.groups, times = rowSums(marked)))
+mydata <- data.frame(ch = pasty(CH), group = rep(1:n.groups, times = rowSums(marked)))
+
 data.proc <- process.data(mydata,model="CJS", groups = "group")
 data.ddl <- make.design.data(data.proc)
 mymodel <- mark(data.proc, data.ddl,
@@ -52,6 +67,7 @@ mymodel <- mark(data.proc, data.ddl,
 
 ## this chunk for a model with just time
 mydata <- data.frame(ch = pasty(simul.cjs(phi,p,marked)))
+mydata <- data.frame(ch = pasty(CH))
 data.proc <- process.data(mydata,model="CJS")
 data.ddl <- make.design.data(data.proc)
 mymodel <- mark(data.proc, data.ddl,
@@ -80,4 +96,20 @@ mymodel <- mark(data.proc, data.ddl,
 str(mymodel)
 
 
-bootstrap.deviance(mymodel, 10)
+## try it with the dipper data set
+
+data("dipper")
+
+maledipper <- data.frame(ch = dipper[dipper$sex == "Male", 1])
+
+data.proc <- process.data(maledipper,model="CJS")
+data.ddl <- make.design.data(data.proc)
+mymodel <- mark(data.proc, data.ddl,
+                model.parameters = list(Phi = list(formula = ~time), p = list(formula = ~time)))
+
+
+CJS.GOF.testing(data.proc)
+
+str(mymodel)
+
+bootstrap.deviance(mymodel, 10, tsm = TRUE)

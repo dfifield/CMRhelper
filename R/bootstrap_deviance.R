@@ -304,8 +304,9 @@ sims <- function(x, reps, tsm = FALSE)
       }
     }
 
-    deviance[i] <- global.sim$results$lnl
-  }
+    deviance[i] <- global.sim$results$deviance
+
+      }
   out <-
     list(
       deviance.mean = mean(deviance),
@@ -344,7 +345,7 @@ sims <- function(x, reps, tsm = FALSE)
 #'
 bootstrap.deviance <- function(x, reps, tsm = FALSE) {
   sim.out <- sims(x, reps, tsm)
-  data.deviance <- x$results$lnl
+  data.deviance <- x$results$deviance
   sim.ci <- c(sim.out$deviance.025, sim.out$deviance.975)
   cat(
     "data deviance = ",

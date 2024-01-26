@@ -1,8 +1,8 @@
 Package: CMRhelper
 Type: Package
 Title: Helper Functions for Capture-Mark-Recapture Analyses
-Version: 0.5.4
-Author: Greg J. Robertson, David A. Fifield, and Anna M. Calvert, Sarah E. Gutowsky 
+Version: 0.6.0
+Author: Gregory J. Robertson, David A. Fifield, and Anna M. Calvert, Sarah E. Gutowsky 
 Maintainer: Dave Fifield <dave.fifield@ec.gc.ca>
 Description: A library of lovingly and tastefully crafted helper functions to
     assist with CMR analyses. Includes functions copied/modified from The Gentle Introduciton
