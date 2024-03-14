@@ -67,7 +67,7 @@ extract.model <- function(x) {
 
   phi <- matrix(as.vector(t(t(
     sapply(1:n.groups, function (g) {
-      as.vector(t(summary.mark(x)$reals$Phi[[g]]$pim))
+      as.vector(t(RMark::summary.mark(x)$reals$Phi[[g]]$pim))
     })
   ))), ncol = n.occasions - 1, byrow = TRUE)
 
@@ -275,7 +275,7 @@ sims <- function(x, reps, tsm = FALSE)
           sim.ddl,
           parameter = "Phi",
           type = "age",
-          bins = c(0, 1, 17),
+          bins = c(0, 1, 100),
           name = "tsm",
           right = FALSE,
           replace = TRUE
