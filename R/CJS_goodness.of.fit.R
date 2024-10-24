@@ -9,7 +9,12 @@
 #'  \code{\link[RMark]{process.data}()} based on live-only capture histories and
 #'  model = "CJS".
 #'
-#'@param verbose (optional, default = FALSE) if TRUE, prints test details
+#'@param verbose (optional, default = \code{FALSE}) if TRUE, prints test details
+#'
+#'@param keep.intermediate (optional, default FALSE) this function creates and
+#'  intermediate file (\code{CH.for.GOF.inp}) which is removed by default before
+#'  returning. If this option is \code{TRUE}, then the intermediate file is not
+#'  removed.
 #'
 #'@details This function produces a dataframe of summary stats from each R2ucare
 #'  test with the option to print details of each test to the console.
@@ -83,6 +88,10 @@ CJS.GOF.testing <- function(data.processed, verbose = FALSE)
     message("\nTest2CL details:")
     print(test2cl$details)
   }
+
+  # Clean up
+  if(unlink("CH.for.GOF.inp") == 1)
+    warning("CJS.GOF.testing: Failed to remove temporary file 'CH.for.GOF.inp'")
 
   return(GOF.tests.CJS)
 

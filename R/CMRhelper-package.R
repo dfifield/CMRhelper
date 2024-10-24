@@ -1,9 +1,10 @@
-#' CMRhelper
-#'
-#' A library of helper functions to assist with CMR analyses.
-#'
-#' @docType package
-#' @name CMRhelper
+#' @keywords internal
+"_PACKAGE"
+
+# The following block is used by usethis to automatically manage
+# roxygen namespace tags. Modify with care!
+## usethis namespace: start
+## usethis namespace: end
 #' @import assertthat
 #' @importFrom utils head tail
 NULL

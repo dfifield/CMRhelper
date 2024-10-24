@@ -12,7 +12,12 @@ CJS.GOF.testing(data.processed, verbose = FALSE)
 \code{\link[RMark]{process.data}()} based on live-only capture histories and
 model = "CJS".}
 
-\item{verbose}{(optional, default = FALSE) if TRUE, prints test details}
+\item{verbose}{(optional, default = \code{FALSE}) if TRUE, prints test details}
+
+\item{keep.intermediate}{(optional, default FALSE) this function creates and
+intermediate file (\code{CH.for.GOF.inp}) which is removed by default before
+returning. If this option is \code{TRUE}, then the intermediate file is not
+removed.}
 }
 \value{
 Returns a dataframe with goodness of fit testing results from overall
